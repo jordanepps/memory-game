@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="main.css" />
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/c85b8e7843.js"></script>
+    <title>Memory Game</title>
+</head>
+
+<body>
+    <div class="modal js-modal">
+        <form class="modal-content js-color-form">
+            <h4 class="js-modal-headline">Player 1, please choose a color</h4>
+            <div class="color-radio js-color-radio">
+                <input type="radio" name="color" value="red" id="red" />
+                <label for="red"><span class="red"></span><br /><span>Red</span></label>
+            </div>
+            <div class="color-radio js-color-radio">
+                <input type="radio" name="color" value="blue" id="blue" />
+                <label for="blue"><span class="blue"></span><br /><span>Blue</span></label>
+            </div>
+            <div class="submit-btn-container js-submit-btn">
+                <input class="color-pick-btn" type="submit" value="play" />
+            </div>
+
+        </form>
+    </div>
+    <main role="main" id="main">
+        <h1 class="title">Memory Game</h1>
+        <p class="about">Find all the matching pairs of cards with a friend. The one who finds the most matches is the
+            winner.</p>
+        <div id="container">
+            <button class="js-start-game">New Game</button>
+            <div class="scoreboard js-scoreboard">
+                <div class="scoreboard-container">
+                    <p class="player-score player1">Player 1: <span class="player1-score"></span></p>
+                    <p class="player-score player2">Player 2: <span class="player2-score"></span></p>
+                </div>
+            </div>
+            <div class="board">
+
+                <!-- <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-pizza-slice"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-ice-cream"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-bacon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-fish"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-hamburger"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-hotdog"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-apple-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-container">
+                        <div class="card-front">
+                        </div>
+                        <div class="card-back">
+                            <i class="fas fa-egg"></i>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div class="card">
+
+                    <div class="card-container">
+
+                        <div class="card-front">
+                        </div>
+
+                        <div class="card-back">
+                            <i class="fas fa-egg"></i>
+                        </div>
+
+                    </div>
+
+                </div> -->
+
+            </div>
+        </div>
+    </main>
+    <script type="text/javascript" src="cards.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+
+</html>
