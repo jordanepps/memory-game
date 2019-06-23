@@ -32,21 +32,44 @@ function setFlipsLeft() {
 }
 
 function startTurn() {
-    const currentPlayerTurn = player1Turn ? '1' : '2';
-    $('.about').text(`Player ${currentPlayerTurn}'s turn`);
-    $(setFlipsLeft);
-
+    if (pairsLeft > 0) {
+        const currentPlayerTurn = player1Turn ? '1' : '2';
+        $('.about').text(`Player ${currentPlayerTurn}'s turn`);
+        $(setFlipsLeft);
+    }
 }
 
 function endTurn() {
     if (cardsFlipped[0] === cardsFlipped[1]) {
-        console.log('match!');
+        $(handlePair);
+        $(nextTurn);
     } else {
         $(handleNotAPair);
         $(nextTurn);
     }
-
 }
+
+function handlePair() {
+    cardsFlipped[0] = cardsFlipped[0].split(' ').map(className => className.replace(/^/, '.')).join('');
+    cardsFlipped[1] = cardsFlipped[1].split(' ').map(className => className.replace(/^/, '.')).join('');
+    const color = player1Turn ? player1.color : player2.color;
+    setTimeout(() => {
+        $($(cardsFlipped[0])).parent().css('background-color', `var(--${color})`);
+        $($(cardsFlipped[1])).parent().css('background-color', `var(--${color})`);
+        player1Turn ? player1.score++ : player2.score++;
+        $(setScores);
+        pairsLeft--;
+        if (pairsLeft === 0)
+            $(gameOver);
+    }, 1000);
+}
+
+function gameOver() {
+    let msg = player1.score > player2.score ? 'Player 1 is the winner!!' : 'Player 2 is the winner!!'
+    $('.about').html(msg);
+    $('.flips').empty();
+}
+
 
 function nextTurn() {
     setTimeout(() => {
@@ -55,32 +78,15 @@ function nextTurn() {
         cardsFlipped.length = 0;
         $(startTurn);
     }, 1500);
-
 }
 
 function handleNotAPair() {
+    //Make cards name class for jquery
     cardsFlipped[0] = cardsFlipped[0].split(' ').map(className => className.replace(/^/, '.')).join('');
     cardsFlipped[1] = cardsFlipped[1].split(' ').map(className => className.replace(/^/, '.')).join('');
     setTimeout(() => {
-        // $($(cardsFlipped[0])[0]).parent().parent().css({
-        //     'transform': 'none',
-        //     '-ms-transform': 'none',
-        //     '-webkit-transform': 'none',
-        //     '-moz-transform': 'none',
-        //     '-o-transform': 'none',
-        //     '-webkit-backface-visibility': 'hidden'
-        // });
-        // $($(cardsFlipped[1])[0]).parent().parent().css({
-        //     'transform': 'none',
-        //     '-ms-transform': 'none',
-        //     '-webkit-transform': 'none',
-        //     '-moz-transform': 'none',
-        //     '-o-transform': 'none',
-        //     '-webkit-backface-visibility': 'hidden'
-        // });
-        console.log($(cardsFlipped[0])[0]);
+        //Flip cards back over
         $($(cardsFlipped[0])).parent().parent().removeClass('show');
-        console.log($(cardsFlipped[1])[0]);
         $($(cardsFlipped[1])).parent().parent().removeClass('show');
     }, 1000);
 }
