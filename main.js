@@ -7,25 +7,98 @@ const player2 = {
     score: 0
 };
 
-let flipsLeft = 2;
+let flipsLeft = 2,
+    player1Turn = true,
+    pairsLeft = 9,
+    cardsFlipped = [];
 
 function flipCard() {
     //Handle flip card animation
     $('.board').on('click', '.card-front', function (e) {
-        $(e.target).parent().css({
-            'transform': 'rotateY(180deg)',
-            '-ms-transform': 'rotateY(180deg)',
-            '-webkit-transform': 'rotateY(180deg)',
-            '-moz-transform': 'rotateY(180deg)',
-            '-o-transform': 'rotateY(180deg)'
-        });
+        if (flipsLeft > 0) {
+            flipsLeft--;
+            $(setFlipsLeft);
+            const flipped = $(e.target).siblings().children('i').attr('class');
+            cardsFlipped.push(flipped);
+            $(e.target).parent().addClass('show');
+            if (flipsLeft === 0)
+                $(endTurn);
+        }
     })
 }
 
+function setFlipsLeft() {
+    $('.flips').text(`Flips left: ${flipsLeft}`);
+}
+
+function startTurn() {
+    const currentPlayerTurn = player1Turn ? '1' : '2';
+    $('.about').text(`Player ${currentPlayerTurn}'s turn`);
+    $(setFlipsLeft);
+
+}
+
+function endTurn() {
+    if (cardsFlipped[0] === cardsFlipped[1]) {
+        console.log('match!');
+    } else {
+        $(handleNotAPair);
+        $(nextTurn);
+    }
+
+}
+
+function nextTurn() {
+    setTimeout(() => {
+        flipsLeft = 2;
+        player1Turn = !player1Turn;
+        cardsFlipped.length = 0;
+        $(startTurn);
+    }, 1500);
+
+}
+
+function handleNotAPair() {
+    cardsFlipped[0] = cardsFlipped[0].split(' ').map(className => className.replace(/^/, '.')).join('');
+    cardsFlipped[1] = cardsFlipped[1].split(' ').map(className => className.replace(/^/, '.')).join('');
+    setTimeout(() => {
+        // $($(cardsFlipped[0])[0]).parent().parent().css({
+        //     'transform': 'none',
+        //     '-ms-transform': 'none',
+        //     '-webkit-transform': 'none',
+        //     '-moz-transform': 'none',
+        //     '-o-transform': 'none',
+        //     '-webkit-backface-visibility': 'hidden'
+        // });
+        // $($(cardsFlipped[1])[0]).parent().parent().css({
+        //     'transform': 'none',
+        //     '-ms-transform': 'none',
+        //     '-webkit-transform': 'none',
+        //     '-moz-transform': 'none',
+        //     '-o-transform': 'none',
+        //     '-webkit-backface-visibility': 'hidden'
+        // });
+        console.log($(cardsFlipped[0])[0]);
+        $($(cardsFlipped[0])).parent().parent().removeClass('show');
+        console.log($(cardsFlipped[1])[0]);
+        $($(cardsFlipped[1])).parent().parent().removeClass('show');
+    }, 1000);
+}
+
 function beginGame() {
+    $(reset);
     $(clearGameBoard);
     $(displayScoreBoard)
     $(setGameBoard);
+    $(startTurn);
+}
+
+function reset() {
+    player1.score = player2.score = 0;
+    flipsLeft = 2;
+    player1Turn = true;
+    pairsLeft = 9;
+    cardsFlipped.length = 0;
 }
 
 function clearGameBoard() {
@@ -101,16 +174,11 @@ function handleStartClick() {
     });
 }
 
-function handleStartGameClick() {
+function main() {
     $(handleStartClick);
     $(handleColorPickSubmit);
     $(handleColorClick);
     $(flipCard);
-}
-
-function main() {
-    $(handleStartGameClick);
-
 }
 
 $(main);
